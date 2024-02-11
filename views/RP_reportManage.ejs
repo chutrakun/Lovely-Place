@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lovely Place | ADMIN - Report Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <style>
+        *{
+            font-family: 'Kanit', sans-serif;
+        }
+
+        body {
+ 
+            background-image: url('img/background/pexels-eberhard-grossgasteiger-2088170.jpg');
+            background-size: cover;
+            background-position:40%;
+            background-repeat: no-repeat;
+            height: 100vh;
+
+}
+    </style>
+</head>
+<body>
+    
+    <%- include ('navbar.ejs') %>
+
+    <div class="container mt-5">
+        <h2 class="mb-2">คำรายงานโพสต์</h2>
+        <p>เรียกดูรายละเอียด และจัดการคำรายงานโพสต์ทั้งหมด</p>
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered table-light">
+                <thead>
+                    <tr class="table-dark">
+                        <th class="text-center">Report ID</th>
+                        <th class="text-center">Post ID</th>
+                        <th class="text-center">คำรายงาน</th>
+                        <th class="text-center">ผู้รายงาน</th>
+                        <th class="text-center">ดู</th>
+                        <th class="text-center">ลบคำรายงาน</th>
+                        <th class="text-center">ลบโพสต์</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% Object.values(reportData).forEach((item)=>{ %>
+                    <tr>
+                        <td class="text-center"><%= item.report_id %> </td>
+                        <td class="text-center"><%= item.post_id %> </td>
+                        <td><%= item.report_message %></td>
+                        <td class="text-center"><%= item.user_id %> </td>
+                        <!-- ดูโพสต์ -->
+                        <td>
+                            <a href="/post/<%= item.post_id %>" class="btn btn-success col-12">ดู</ฟ>
+                        </td>
+                        <!-- ลบคำรายงาน -->
+                        <td>
+                            <form method="post" action="/admin_management/report/delete_report">
+                                <input type="hidden" value="<%= item.report_id %>" name="report_id">
+                                <button type="sumbit" class="btn btn-warning col-12">ลบคำรายงาน</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="post" action="/admin_management/report/delete_post">
+                                <input type="hidden" value="<%= item.post_id %>" name="post_id">
+                                <button type="sumbit" class="btn btn-danger col-12">ลบโพสต์</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+           
+    </div>
+
+</body>
+</html>
